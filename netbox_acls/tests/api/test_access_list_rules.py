@@ -4,6 +4,7 @@ from netbox_acls.choices import (
     ACLFamilyChoices,
     ACLProtocolChoices,
     ACLRuleActionChoices,
+    ACLRuleLogOptionChoices,
     ACLTypeChoices,
 )
 from utilities.testing import APIViewTestCases
@@ -158,6 +159,7 @@ class ACLExtendedRuleAPIViewTestCase(APIViewTestCases.APIViewTestCase):
                 source_port_ranges=[[1024, 65535]],
                 destination=prefix1,
                 destination_port_ranges=[[22, 23], [443, 444]],
+                log_option=ACLRuleLogOptionChoices.OPTION_LOG,
             ),
             ACLExtendedRule(
                 access_list=access_list_device,
@@ -191,6 +193,7 @@ class ACLExtendedRuleAPIViewTestCase(APIViewTestCases.APIViewTestCase):
                 "destination_type": "ipam.prefix",
                 "destination_id": prefix2.id,
                 "destination_port_ranges": [[53, 53]],
+                "log_option": ACLRuleLogOptionChoices.OPTION_LOG,
             },
             {
                 "access_list": access_list_vm.id,

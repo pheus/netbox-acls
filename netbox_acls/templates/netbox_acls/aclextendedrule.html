@@ -57,6 +57,14 @@
             <th scope="row">Destination Port Ranges</th>
             <td>{{ object.destination_port_ranges_list|join:", "|placeholder }}</td>
           </tr>
+          <tr>
+            <th scope="row">Log Option</th>
+            {% if object.log_option %}
+              <td>{% badge object.get_log_option_display bg_color=object.get_log_option_color %}</td>
+            {% else %}
+              <td>{{ ""|placeholder }}</td>
+            {% endif %}
+          </tr>
         </table>
       </div>
     </div>

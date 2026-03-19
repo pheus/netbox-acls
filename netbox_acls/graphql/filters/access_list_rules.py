@@ -22,6 +22,7 @@ if TYPE_CHECKING:
     from ..enums import (
         ACLProtocolEnum,
         ACLRuleActionEnum,
+        ACLRuleLogOptionEnum,
     )
     from .access_lists import AccessListFilter
 
@@ -92,3 +93,8 @@ class ACLExtendedRuleFilter(ACLRuleFilterMixin):
     protocol: BaseFilterLookup[Annotated["ACLProtocolEnum", strawberry.lazy("netbox_acls.graphql.enums")]] | None = (
         strawberry_django.filter_field()
     )
+
+    # Rule options
+    log_option: (
+        BaseFilterLookup[Annotated["ACLRuleLogOptionEnum", strawberry.lazy("netbox_acls.graphql.enums")]] | None
+    ) = strawberry_django.filter_field()

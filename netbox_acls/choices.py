@@ -12,6 +12,7 @@ __all__ = (
     "ACLProtocolChoices",
     "ACLProtocolChoices",
     "ACLRuleActionChoices",
+    "ACLRuleLogOptionChoices",
     "ACLTypeChoices",
 )
 
@@ -63,6 +64,18 @@ class ACLRuleActionChoices(ChoiceSet):
         (ACTION_DENY, "Deny", "red"),
         (ACTION_PERMIT, "Permit", "green"),
         (ACTION_REMARK, "Remark", "blue"),
+    ]
+
+
+class ACLRuleLogOptionChoices(ChoiceSet):
+    """
+    Defines the log options available for ACL rules.
+    """
+
+    OPTION_LOG = "log"
+
+    CHOICES = [
+        (OPTION_LOG, "Log", "green"),
     ]
 
 

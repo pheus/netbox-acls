@@ -17,6 +17,7 @@ from ..choices import (
     ACLFamilyChoices,
     ACLProtocolChoices,
     ACLRuleActionChoices,
+    ACLRuleLogOptionChoices,
     ACLTypeChoices,
 )
 from ..constants import ACL_RULE_SOURCE_DESTINATION_MODELS
@@ -48,6 +49,9 @@ ERROR_MESSAGE_ACTION_REMARK_DESTINATION_PORTS_SET = _("When the action is 'remar
 
 # Error message when the action is 'remark', but the protocol is set.
 ERROR_MESSAGE_ACTION_REMARK_PROTOCOL_SET = _("When the action is 'remark', Protocol must not be set.")
+
+# Error message when the action is 'remark', but the log_option is set.
+ERROR_MESSAGE_ACTION_REMARK_LOG_OPTION_SET = _("When the action is 'remark', Log Option must not be set.")
 
 # Error message when the protocol is not 'TCP' or 'UDP', but the source ports are set.
 ERROR_MESSAGE_PROTOCOL_NOT_TCP_OR_UDP_WITH_SOURCE_PORTS_SET = _(
@@ -394,6 +398,14 @@ class ACLExtendedRule(ACLRule):
         help_text=_("Inclusive port ranges (e.g., 10-20,22,80-81)."),
     )
 
+    # Rule options
+    log_option = models.CharField(
+        verbose_name=_("Log Option"),
+        max_length=30,
+        choices=ACLRuleLogOptionChoices,
+        blank=True,
+    )
+
     # Cached related objects by association name for faster access
     _destination_aggregate = models.ForeignKey(
         to="ipam.aggregate",
@@ -438,6 +450,7 @@ class ACLExtendedRule(ACLRule):
         "destination_type",
         "destination_port_ranges",
         "protocol",
+        "log_option",
     )
 
     class Meta(ACLRule.Meta):
@@ -495,6 +508,8 @@ class ACLExtendedRule(ACLRule):
                 errors["destination_port_ranges"] = ERROR_MESSAGE_ACTION_REMARK_DESTINATION_PORTS_SET
             if self.protocol:
                 errors["protocol"] = ERROR_MESSAGE_ACTION_REMARK_PROTOCOL_SET
+            if self.log_option:
+                errors["log_option"] = ERROR_MESSAGE_ACTION_REMARK_LOG_OPTION_SET
         # Validate that the source or destination ports are only set when the protocol is TCP or UDP
         elif self.protocol not in [ACLProtocolChoices.PROTOCOL_TCP, ACLProtocolChoices.PROTOCOL_UDP]:
             if self.source_port_ranges:
@@ -561,6 +576,12 @@ class ACLExtendedRule(ACLRule):
         Returns the color associated with the protocol of an ACL rule.
         """
         return ACLProtocolChoices.colors.get(self.protocol)
+
+    def get_log_option_color(self):
+        """
+        Returns the color associated with the log option of an ACL rule.
+        """
+        return ACLRuleLogOptionChoices.colors.get(self.log_option)
 
 
 #

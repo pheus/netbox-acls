@@ -133,6 +133,7 @@ class AccessListView(generic.ObjectView):
 
         if table:
             table.columns.hide("access_list")
+            table.columns.hide("tags")
             table.configure(request)
 
             return {

@@ -24,6 +24,7 @@ from ..choices import (
     ACLFamilyChoices,
     ACLProtocolChoices,
     ACLRuleActionChoices,
+    ACLRuleLogOptionChoices,
     ACLTypeChoices,
 )
 from ..constants import ACL_ASSIGNMENT_MODELS, ACL_RULE_SOURCE_DESTINATION_MODELS
@@ -314,6 +315,13 @@ class ACLExtendedRuleBulkEditForm(PrimaryModelBulkEditForm):
         label=_("Destination Port Ranges"),
     )
 
+    # Rule options
+    log_option = forms.ChoiceField(
+        choices=add_blank_choice(ACLRuleLogOptionChoices),
+        required=False,
+        label=_("Log Option"),
+    )
+
     model = ACLExtendedRule
     fieldsets = (
         FieldSet(
@@ -346,6 +354,10 @@ class ACLExtendedRuleBulkEditForm(PrimaryModelBulkEditForm):
             "destination_port_ranges",
             name=_("Destination Definition"),
         ),
+        FieldSet(
+            "log_option",
+            name=_("Options"),
+        ),
     )
     nullable_fields = (
         "remark",
@@ -353,6 +365,7 @@ class ACLExtendedRuleBulkEditForm(PrimaryModelBulkEditForm):
         "source",
         "destination_type",
         "destination",
+        "log_option",
         "description",
         "comments",
     )

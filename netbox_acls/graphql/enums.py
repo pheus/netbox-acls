@@ -6,6 +6,7 @@ from ..choices import (
     ACLFamilyChoices,
     ACLProtocolChoices,
     ACLRuleActionChoices,
+    ACLRuleLogOptionChoices,
     ACLTypeChoices,
 )
 
@@ -15,6 +16,7 @@ __all__ = (
     "ACLFamilyEnum",
     "ACLProtocolEnum",
     "ACLRuleActionEnum",
+    "ACLRuleLogOptionEnum",
     "ACLTypeEnum",
 )
 
@@ -38,3 +40,4 @@ ACLAssignmentDirectionEnum = strawberry.enum(ACLAssignmentDirectionChoices.as_en
 
 ACLProtocolEnum = strawberry.enum(ACLProtocolChoices.as_enum())
 ACLRuleActionEnum = strawberry.enum(ACLRuleActionChoices.as_enum())
+ACLRuleLogOptionEnum = strawberry.enum(ACLRuleLogOptionChoices.as_enum())

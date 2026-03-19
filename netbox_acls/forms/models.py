@@ -442,6 +442,10 @@ class ACLExtendedRuleForm(PrimaryModelForm):
             "destination_port_ranges",
             name=_("Destination Definition"),
         ),
+        FieldSet(
+            "log_option",
+            name=_("Options"),
+        ),
     )
 
     class Meta:
@@ -456,6 +460,7 @@ class ACLExtendedRuleForm(PrimaryModelForm):
             "destination_type",
             "destination_port_ranges",
             "protocol",
+            "log_option",
             "description",
             "owner",
             "comments",
@@ -465,6 +470,7 @@ class ACLExtendedRuleForm(PrimaryModelForm):
         help_texts = {
             "action": help_text_acl_action,
             "sequence": help_text_acl_rule_sequence,
+            "log_option": help_text_acl_rule_logic,
             "protocol": help_text_acl_rule_logic,
             "remark": help_text_acl_remark,
         }

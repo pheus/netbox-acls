@@ -291,6 +291,7 @@ class ACLExtendedRuleSerializer(PrimaryModelSerializer):
             "destination",
             "destination_port_ranges",
             "destination_port_terms",
+            "log_option",
             "description",
             "owner",
             "comments",
@@ -330,6 +331,7 @@ class ACLExtendedRuleSerializer(PrimaryModelSerializer):
           - Check if action set to remark, but destination set.
           - Check if action set to remark, but destination_port_ranges set.
           - Check if action set to remark, but protocol set.
+          - Check if action set to remark, but log_option set.
         """
         error_message = {}
 
@@ -363,6 +365,11 @@ class ACLExtendedRuleSerializer(PrimaryModelSerializer):
             if data.get("protocol"):
                 error_message["protocol"] = [
                     _("Action is set to remark, Protocol CANNOT be set."),
+                ]
+            # Check if action set to remark, but log_option set.
+            if data.get("log_option"):
+                error_message["log_option"] = [
+                    "Action is set to remark, Log Option CANNOT be set.",
                 ]
 
         if error_message:

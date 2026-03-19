@@ -237,6 +237,9 @@ class ACLExtendedRuleTable(PrimaryModelTable):
         orderable=False,
     )
 
+    # Rule options
+    log_option = columns.ChoiceFieldColumn()
+
     class Meta(PrimaryModelTable.Meta):
         model = ACLExtendedRule
         fields = (
@@ -251,6 +254,7 @@ class ACLExtendedRuleTable(PrimaryModelTable):
             "source_port_ranges_list",
             "destination",
             "destination_port_ranges_list",
+            "log_option",
             "description",
             "tags",
             "comments",
@@ -265,5 +269,6 @@ class ACLExtendedRuleTable(PrimaryModelTable):
             "source_port_ranges_list",
             "destination",
             "destination_port_ranges_list",
+            "log_option",
             "tags",
         )

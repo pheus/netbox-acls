@@ -7,6 +7,7 @@ from ...choices import (
     ACLActionChoices,
     ACLFamilyChoices,
     ACLProtocolChoices,
+    ACLRuleLogOptionChoices,
     ACLTypeChoices,
 )
 from ...models import AccessList, ACLExtendedRule
@@ -29,6 +30,7 @@ class TestACLExtendedRule(BaseTestCase):
         cls.family = ACLFamilyChoices.FAMILY_IPV4
         cls.default_action = "deny"
         cls.protocol = ACLProtocolChoices.PROTOCOL_TCP
+        cls.log_option = ACLRuleLogOptionChoices.OPTION_LOG
 
         # AccessLists
         cls.extended_acl1 = AccessList.objects.create(
@@ -483,6 +485,7 @@ class TestACLExtendedRule(BaseTestCase):
             destination=self.prefix2,
             destination_port_ranges=string_to_ranges("22,443"),
             protocol=self.protocol,
+            log_option=self.log_option,
             description="Created rule with complete parameters",
         )
         created_rule.full_clean()
@@ -496,6 +499,7 @@ class TestACLExtendedRule(BaseTestCase):
         self.assertEqual(created_rule.destination, self.prefix2)
         self.assertEqual(created_rule.destination_port_ranges, [NumericRange(22, 23), NumericRange(443, 444)])
         self.assertEqual(created_rule.protocol, self.protocol)
+        self.assertEqual(created_rule.log_option, self.log_option)
         self.assertEqual(created_rule.description, "Created rule with complete parameters")
         self.assertEqual(isinstance(created_rule.access_list, AccessList), True)
         self.assertEqual(created_rule.access_list.type, self.acl_type)

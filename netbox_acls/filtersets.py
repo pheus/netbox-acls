@@ -463,6 +463,7 @@ class ACLExtendedRuleFilterSet(PrimaryModelFilterSet):
             "destination_type",
             "destination_id",
             "destination_port",
+            "log_option",
             "description",
             "comments",
         )

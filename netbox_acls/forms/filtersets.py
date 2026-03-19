@@ -24,6 +24,7 @@ from ..choices import (
     ACLFamilyChoices,
     ACLProtocolChoices,
     ACLRuleActionChoices,
+    ACLRuleLogOptionChoices,
     ACLTypeChoices,
 )
 from ..models import (
@@ -330,6 +331,10 @@ class ACLExtendedRuleFilterForm(PrimaryModelFilterSetForm):
             name=_("Destination Details"),
         ),
         FieldSet(
+            "log_option",
+            name=_("Options"),
+        ),
+        FieldSet(
             "owner_group_id",
             "owner_id",
             name=_("Ownership"),
@@ -413,6 +418,13 @@ class ACLExtendedRuleFilterForm(PrimaryModelFilterSetForm):
     destination_port = forms.IntegerField(
         label=_("Destination Port"),
         required=False,
+    )
+
+    # Rule option selectors
+    log_option = forms.ChoiceField(
+        choices=add_blank_choice(ACLRuleLogOptionChoices),
+        required=False,
+        label=_("Log Option"),
     )
 
     # Tag selector
